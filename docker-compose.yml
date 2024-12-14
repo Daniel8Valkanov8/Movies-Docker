@@ -1,0 +1,46 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=yourUsername
+      - MONGO_INITDB_ROOT_PASSWORD=yourPassword
+    volumes:
+      - data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - goals
+
+  backend:
+    container_name: backend
+    environment:
+      - MONGODB_USERNAME=yourUsername
+      - MONGODB_PASSWORD=yourPassword
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/logs
+    build: ./backend
+    networks:
+      - goals
+
+  frontend:
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/src
+    build: ./frontend
+    networks:
+      - goals
+    
+networks:
+  goals:
+    name: goals
+    
+volumes:
+  data:
+    name: data
+  logs:
+    name: logs
