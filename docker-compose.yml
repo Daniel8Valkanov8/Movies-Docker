@@ -10,7 +10,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - goals
+      - movies
 
   backend:
     container_name: backend
@@ -23,7 +23,7 @@ services:
       - logs:/logs
     build: ./backend
     networks:
-      - goals
+      - movies
 
   frontend:
     container_name: frontend
@@ -33,11 +33,11 @@ services:
       - ./frontend/src:/src
     build: ./frontend
     networks:
-      - goals
+      - movies
     
 networks:
-  goals:
-    name: goals
+  movies:
+    name: movies
     
 volumes:
   data:
